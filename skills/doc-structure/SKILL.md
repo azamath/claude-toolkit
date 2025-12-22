@@ -10,10 +10,11 @@ You are a specialized skill for creating and managing well-structured project do
 ## Core Principles
 
 1. **Minimal but sufficient** - Documentation for startups, not corporations
-2. **Sequential creation** - Create documents in order as conversation progresses
-3. **Smart guidance** - Determine completeness and suggest next steps
-4. **Auto-maintenance** - Keep README files and statuses updated
-5. **Interactive approach** - Guide through dialog, not dump templates
+2. **Philosophy** - Lightweight, actionable, risk-aware, just enough. For solo startup developers who need a clear specs without ceremony.
+3. **Sequential creation** - Create documents in order as conversation progresses
+4. **Smart guidance** - Determine completeness and suggest next steps
+5. **Auto-maintenance** - Keep README files and statuses updated
+6. **Interactive approach** - Guide through dialog, not dump templates
 
 ## Documentation Structure
 
@@ -37,31 +38,40 @@ docs/
 ## Workflow
 
 ### Phase 1: Requirements
-1. Find next available number (001, 002, etc.)
-2. Create directory `docs/specs/NNN-feature-name/`
-3. Create `requirements.md` from template
-4. Create `README.md` with status: `draft`
-5. Update `docs/README.md` with link to new feature
-6. **Guide user through filling requirements interactively**
-7. **Determine when requirements are complete**
-8. Suggest moving to design phase
+1. **Read project context** - Read `docs/overview.md` (if exists) to understand the project, tech stack, domain, and goals
+2. Find next available number (001, 002, etc.)
+3. Create directory `docs/specs/NNN-feature-name/`
+4. Create `requirements.md` from template
+5. Create `README.md` with status: `draft`
+6. Update `docs/README.md` with link to new feature
+7. **Guide user through filling requirements interactively**
+8. **Determine when requirements are complete**
+9. Suggest moving to design phase
 
 ### Phase 2: Design
-1. Create `design.md` from complete template (includes all sections)
-2. **Analyze requirements and determine which sections are relevant**
-3. **Ask user to confirm relevant sections** (e.g., "Based on your feature, I think we need: Data Model, API Contracts, Security. We can skip Performance and Migration. Does this sound right?")
-4. Update status to `in-design` in all README files
-5. Add changelog entry: "Design phase started"
-6. **Guide user through filling relevant sections interactively**
-7. **Determine when design is complete**
-8. Suggest moving to planning phase
+1. **Update `requirements.md` metadata**: Change status from `draft` to `completed`
+2. Create `design.md` from complete template (includes all sections) with status: `in-design`
+3. **Analyze requirements and determine which sections are relevant**
+4. **Ask user to confirm relevant sections** (e.g., "Based on your feature, I think we need: Data Model, API Contracts, Security. We can skip Performance and Migration. Does this sound right?")
+5. Update README files status to `in-design`
+6. Add changelog entry: "Design phase started"
+7. **Guide user through filling relevant sections interactively**
+8. **Determine when design is complete**
+9. Suggest moving to planning phase
 
 ### Phase 3: Planning
-1. Create `plan.md` from template
-2. Update status to `in-progress` in all README files
-3. Add changelog entry: "Implementation planning started"
-4. **Guide user through implementation planning**
-5. Mark as ready for implementation
+1. **Update `design.md` metadata**: Change status from `in-design` to `completed`
+2. Create `plan.md` from template with status: `in-progress`
+3. Update README files status to `in-progress`
+4. Add changelog entry: "Implementation planning started"
+5. **Guide user through implementation planning**:
+   - Ask "What are the major implementation phases?" (aim for 3-7 high-level areas)
+   - For each phase: "What's the scope?" and "What are the deliverables?"
+   - Ask "Why this order?" to establish priority and dependencies
+   - Ensure phases are strategic (not granular tasks like individual files)
+   - Remind: AI will break down phases into detailed tasks during implementation using TodoWrite
+6. **Verify plan quality**: Check that phases have clear scope/deliverables and avoid over-decomposition
+7. Mark as ready for implementation
 
 ## Section Guidance
 
@@ -87,7 +97,23 @@ This section provides detailed guidance on how to fill each section of the docum
 #### Functional Requirements
 **Purpose**: Define what the system should do
 **How to guide**: Ask "What specific actions should users be able to perform?"
-**Include**: Clear, testable requirements (use "The system shall..." format)
+**Include**: Clear, testable requirements using mixed format for readability
+**Format**: Use varied phrasing to avoid monotony:
+- Group related requirements under subsections (e.g., "User Management", "Search Features")
+- Use natural language: "Users can...", "Support for...", action phrases ("Create account", "Export data")
+- Avoid repetitive "The system shall..." format
+**Example**:
+```markdown
+### User Management
+- Users can sign up with email/password or social login (Google, GitHub)
+- Password reset via email with time-limited token
+- Email verification required before first login
+
+### Search Features
+- Search users by name, email, or role
+- Filter results by status (active/suspended)
+- Export search results to CSV
+```
 
 #### Non-Functional Requirements
 **Purpose**: Define quality attributes and constraints
@@ -155,11 +181,51 @@ This section provides detailed guidance on how to fill each section of the docum
 **Example**: "**API Server**: Express.js REST API, handles authentication and business logic"
 
 #### Data Model
-**Purpose**: Define data structures, schemas, and entities
+**Purpose**: Define data structures, schemas, and entities conceptually
 **When to include**: Feature involves database, state management, or complex data structures
 **How to guide**: Ask "What data needs to be stored?" and "How is it related?"
-**Include**: Database schemas, entity relationships, data types, indexes
-**Format**: Use code blocks for schemas (TypeScript interfaces, SQL DDL, etc.)
+**Include**:
+- Entity definitions (what objects exist)
+- Attributes with types (what fields each has)
+- Relationships (how entities connect)
+- Constraints (unique, required, foreign keys)
+- Indexes (what needs indexing for performance)
+
+**Format**: Use TypeScript interfaces or simple schemas - keep it conceptual, not implementation-specific
+- ✅ TypeScript interfaces (language-agnostic)
+- ✅ Simple entity descriptions with fields
+- ✅ Relationship diagrams or text descriptions
+- ❌ Full SQL CREATE TABLE statements
+- ❌ Detailed migration scripts (those come during implementation)
+
+**Example**:
+```typescript
+interface User {
+  id: string;           // UUID, primary key
+  email: string;        // unique, required
+  passwordHash: string; // required
+  displayName: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface Post {
+  id: string;          // UUID, primary key
+  authorId: string;    // FK -> User.id
+  title: string;       // required
+  content: string;
+  publishedAt: Date | null;
+  createdAt: Date;
+}
+```
+
+**Relationships:**
+- User has many Posts (one-to-many via Post.authorId)
+
+**Indexes:**
+- User.email (unique index for login lookups)
+- Post.authorId (for fetching user's posts)
+- Post.publishedAt (for filtering published posts)
 
 #### API Contracts
 **Purpose**: Define API endpoints and their contracts
@@ -249,14 +315,21 @@ This section provides detailed guidance on how to fill each section of the docum
 - Error logging and monitoring
 - Circuit breakers for external services
 
-#### Design Decisions
+#### Architecture Decisions
 **Purpose**: Document alternatives, trade-offs, and rationale
 **When to include**: Multiple approaches evaluated or design involves compromises
 
-##### Alternatives Considered
-**How to guide**: Ask "What other approaches did you consider?" and "Why not those?"
-**Include**: Table with Approach | Pros | Cons | Decision
-**Format**: Clear rationale for chosen approach
+**How to guide**: Ask "What other approaches did you consider?" and "Why did you choose this one?"
+**Include**: List of key decisions with pros, cons, and rationale
+**Format**: Use ✅ for chosen approach, ❌ for rejected alternatives
+- ✅ [Approach/Option]: [Description]
+  - **Pros**: [...]
+  - **Cons**: [...]
+  - [Rationale]
+- ❌ [Approach/Option]: [Description]
+  - **Pros**: [...]
+  - **Cons**: [...]
+  - [Rationale]
 
 ##### Trade-offs & Compromises
 **How to guide**: Ask "What are we compromising?" and "What technical debt are we taking on?"
@@ -286,64 +359,96 @@ This section provides detailed guidance on how to fill each section of the docum
 ### Plan Document
 
 #### Overview
-**Purpose**: Brief summary of what's being implemented
+**Purpose**: Brief summary of what's being implemented and the overall approach
 **How to guide**: Ask "What are we building based on the design?"
-**Include**: 1-2 paragraphs summarizing the implementation scope
+**Include**: 1-2 paragraphs summarizing the implementation scope and approach
 
-#### Phases / Tasks
-**Purpose**: Break down implementation into manageable pieces
-**How to guide**: Ask "What are the major phases?" and "What tasks are in each phase?"
-**Include**: For each phase:
-- **Goal**: What this phase achieves
-- **Tasks**: Checklist of specific tasks
-- **Deliverables**: Concrete outputs
+#### Implementation Priorities
+**Purpose**: Define high-level implementation phases with clear scope and deliverables. Provides persistent state tracking across AI sessions - enables understanding what's done, in-progress, and pending when resuming work.
 
-**How to structure**:
-- Order phases logically (infrastructure → backend → frontend → integration)
-- Break large tasks into smaller ones
-- Make tasks actionable and specific
-- Identify dependencies between tasks
+**How to guide**: Ask "What are the major phases?" and "What order makes sense and why?"
+
+**Critical Constraints**:
+- **3-7 major phases** - not granular tasks (AI will break down during implementation using TodoWrite)
+- **Each phase = meaningful chunk** - represents a logical area of work, not individual files/functions
+- **Flat structure** - avoid deep nesting (1 level of sub-phases maximum, only if truly necessary)
+- **NOT individual items** - no "Create UserService.swift" or "Add endpoint POST /api/login"
+- **Focus on ORDER and WHY** - explain why this sequence matters
+
+**Each phase must include**:
+1. **Phase name** - clear, descriptive label
+2. **Scope description** - what this phase involves, boundaries of work
+3. **Expected deliverables** - what "done" looks like for this phase
+4. **Checkbox** - for persistent state tracking across sessions
+
+**Format**:
+```markdown
+- [ ] **Phase Name**
+  **Scope:** Brief description of what this phase involves and its boundaries
+  **Deliverables:** Concrete outputs that signal completion
+```
+
+**Example**:
+```markdown
+### Phase 1: Backend Infrastructure
+**Why first:** Need data persistence and auth before UI can function
+
+- [ ] **Supabase Backend Setup**
+  **Scope:** Project creation, authentication configuration, database schema, and storage
+  **Deliverables:** Supabase project configured, anonymous auth enabled, profiles table with RLS policies, profile-photos storage bucket ready
+
+### Phase 2: Core Services Layer
+**Why second:** Business logic layer needed before building UI
+
+- [ ] **Authentication & Profile Services**
+  **Scope:** Swift services wrapping Supabase SDK for auth and profile operations
+  **Deliverables:** AuthenticationManager (sign-in, session, sign-out, delete), ProfileService (CRUD, photo upload), KeychainService (token storage) - all with basic manual testing completed
+
+### Phase 3: User Interface
+**Why third:** UI consumes services built in Phase 2
+
+- [ ] **Onboarding & Profile Screens**
+  **Scope:** Anonymous sign-in flow and profile management UI
+  **Deliverables:** OnboardingView with account creation, ProfileMenuView with display/navigation, EditProfileView with form and photo upload - all screens functional
+
+### Phase 4: Integration & Error Handling
+**Why last:** All pieces must work together first
+
+- [ ] **App Integration & Edge Cases**
+  **Scope:** App launch flow, authentication state management, network error handling
+  **Deliverables:** Complete user journey working end-to-end with proper error states and retry logic
+```
+
+**Key Principles**:
+- Checkboxes provide **persistent state** - critical for resuming work in new conversations
+- AI can see what's done, what's in progress, what's pending
+- During active implementation, AI uses **TodoWrite** for granular task tracking
+- plan.md stays **strategic**, TodoWrite handles **tactical** execution
 
 #### Dependencies
-**Purpose**: Identify what's needed before implementation can start
+**Purpose**: Identify what's needed before starting
 **How to guide**: Ask "What needs to be in place first?"
-**Include**:
-- **Technical Dependencies**: Libraries, services, infrastructure
-- **External Dependencies**: Third-party APIs, team dependencies
+**Include**: Simple list of dependencies (libraries, services, APIs, etc.)
 
 #### Risks & Mitigation
-**Purpose**: Identify potential problems and solutions
+**Purpose**: Identify key blockers and how to handle them
 **How to guide**: Ask "What could go wrong?" and "How will we handle it?"
-**Include**: Table with Risk | Impact | Probability | Mitigation Strategy
-**Format**: Be specific about mitigation actions
+**Include**: List of risks with impact, probability, and mitigation strategy
+**Format**: Use list format (not table)
+- [Risk description]
+  - **Impact**: High/Medium/Low
+  - **Probability**: High/Medium/Low
+  - **Mitigation**: [Specific strategy]
 
 #### Testing Strategy
-**Purpose**: Define how the implementation will be verified
+**Purpose**: Define how to verify the implementation works
 **How to guide**: Ask "How will we test this?"
-**Include**:
-- **Unit Tests**: What components/functions need unit tests
-- **Integration Tests**: What integrations need testing
-- **Manual Testing**: Test scenarios for QA
-- **Performance Tests**: Load/stress testing plans (if applicable)
+**Include**: Practical testing approach
+- **Unit Tests**: What components/functions need testing
+- **Integration Tests**: What integrations to test
+- **Manual Testing**: Key test scenarios to verify
 
-#### Rollout Plan
-**Purpose**: Define deployment and release strategy
-**How to guide**: Ask "How will we deploy this?" and "What if we need to roll back?"
-**Include**:
-- **Deployment Steps**: Numbered, sequential steps
-- **Rollback Plan**: How to revert if issues occur
-- **Feature flags**: If phased rollout planned
-- **Monitoring**: What to watch during rollout
-
-#### Success Criteria
-**Purpose**: Define implementation completion criteria
-**How to guide**: Ask "How will we know the implementation is successful?"
-**Include**: Checkboxes with concrete, testable criteria
-
-#### Open Items
-**Purpose**: Track questions/tasks to resolve during implementation
-**How to guide**: Capture uncertainties during planning
-**Include**: Checkboxes for items that need resolution
+**Note**: Keep it practical - focus on what actually needs testing, not exhaustive coverage
 
 ## Determining Completeness
 
@@ -365,10 +470,12 @@ A section is considered complete when:
 - [ ] Open issues are tracked
 
 ### Plan
-- [ ] Tasks are broken down into manageable pieces
-- [ ] Dependencies between tasks are clear
-- [ ] Risks are identified with mitigation strategies
-- [ ] Implementation order is logical
+- [ ] 3-7 high-level phases defined (not granular tasks)
+- [ ] Each phase has clear scope and deliverables
+- [ ] Implementation order is logical with "why" explanations
+- [ ] Dependencies are identified
+- [ ] Key risks have mitigation strategies
+- [ ] Testing approach is defined
 
 ## Metadata Format
 
@@ -472,10 +579,14 @@ Current status: **Draft**
 - Verify API contracts match functional requirements
 
 ### When planning:
-- Help break down large tasks
-- Identify dependencies between tasks
-- Ask about risks and mitigation
-- Suggest validation steps
+- Guide toward 3-7 high-level phases (resist over-decomposition)
+- Ask "What are the major phases?" not "What are all the tasks?"
+- For each phase, probe for scope and concrete deliverables
+- Ask "Why this order?" to establish logical sequence
+- Identify dependencies between phases
+- Ask about risks and mitigation strategies
+- Define testing approach
+- Remind: Detailed task breakdown happens during implementation via TodoWrite
 
 ## Commands to Support
 

@@ -91,7 +91,7 @@ updated: YYYY-MM-DD
 See `templates/` directory for clean, structural templates:
 - `requirements.md` - Feature requirements template (12 sections)
 - `design.md` - Complete technical design template (11 sections)
-- `plan.md` - Implementation plan template (8 sections)
+- `plan.md` - Lightweight implementation plan template (5 sections)
 
 Templates contain only structural markup. All guidance and instructions are in `SKILL.md` under "Section Guidance".
 
@@ -106,7 +106,7 @@ The design template includes:
 6. Security Considerations
 7. Performance Considerations
 8. Error Handling
-9. Design Decisions (Alternatives + Trade-offs)
+9. Architecture Decisions (Alternatives + Trade-offs)
 10. Migration Strategy
 11. Open Issues
 

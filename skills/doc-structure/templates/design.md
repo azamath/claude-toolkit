@@ -23,10 +23,19 @@ updated: YYYY-MM-DD
 ## Data Model
 
 ```typescript
-interface Entity {
-  id: string;
+interface EntityName {
+  id: string;          // UUID, primary key
+  field: string;       // required, unique
+  anotherField: number;
+  createdAt: Date;
 }
 ```
+
+**Relationships:**
+- Describe how entities relate
+
+**Indexes:**
+- List fields that need indexing
 
 ## API Contracts
 
@@ -83,12 +92,17 @@ graph TD
 -
 -
 
-## Design Decisions
+## Architecture Decisions
 
-### Alternatives Considered
-| Approach | Pros | Cons | Decision |
-|----------|------|------|----------|
-|          |      |      |          |
+- ✅ [Approach/Option]: [Description]
+  - **Pros**: [...]
+  - **Cons**: [...]
+  - [Rationale]
+
+- ❌ [Approach/Option]: [Description]
+  - **Pros**: [...]
+  - **Cons**: [...]
+  - [Rationale]
 
 ### Trade-offs & Compromises
 -

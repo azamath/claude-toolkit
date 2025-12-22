@@ -1,5 +1,5 @@
 ---
-status: draft
+status: in-progress
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 ---
@@ -8,66 +8,60 @@ updated: YYYY-MM-DD
 
 ## Overview
 
-## Phases / Tasks
+[Brief summary of what's being implemented and the overall approach]
+
+## Implementation Priorities
 
 ### Phase 1: [Phase Name]
-**Goal**:
+**Why first:** [Explain why this phase comes first - dependencies, critical path, etc.]
 
-**Tasks**:
-- [ ]
-- [ ]
+- [ ] **[Task Name]**
+  **Scope:** [What this task involves and its boundaries]
+  **Deliverables:** [Concrete outputs that signal completion]
 
-**Deliverables**:
--
+- [ ] **[Task Name]**
+  **Scope:** [What this task involves and its boundaries]
+  **Deliverables:** [Concrete outputs that signal completion]
 
 ### Phase 2: [Phase Name]
-**Goal**:
+**Why second:** [Explain why this phase comes second]
 
-**Tasks**:
-- [ ]
-- [ ]
+- [ ] **[Task Name]**
+  **Scope:** [What this task involves and its boundaries]
+  **Deliverables:** [Concrete outputs that signal completion]
 
-**Deliverables**:
--
+### Phase 3: [Phase Name]
+**Why third:** [Explain why this phase comes third]
+
+- [ ] **[Task Name]**
+  **Scope:** [What this task involves and its boundaries]
+  **Deliverables:** [Concrete outputs that signal completion]
 
 ## Dependencies
 
-### Technical Dependencies
--
-
-### External Dependencies
--
+**What's needed before starting:**
+- Dependency item
+- Dependency item
 
 ## Risks & Mitigation
 
-| Risk | Impact | Probability | Mitigation Strategy |
-|------|--------|-------------|---------------------|
-|      |        |             |                     |
+- [Risk description]
+  - **Impact**: High/Medium/Low
+  - **Probability**: High/Medium/Low
+  - **Mitigation**: [Strategy to address this risk]
+
+- [Risk description]
+  - **Impact**: High/Medium/Low
+  - **Probability**: High/Medium/Low
+  - **Mitigation**: [Strategy to address this risk]
 
 ## Testing Strategy
 
-### Unit Tests
--
+**Unit Tests:**
+- What to test
 
-### Integration Tests
--
+**Integration Tests:**
+- What to test
 
-### Manual Testing
--
-
-## Rollout Plan
-
-### Deployment Steps
-1.
-2.
-
-### Rollback Plan
--
-
-## Success Criteria
-- [ ]
-- [ ]
-
-## Open Items
-- [ ]
-- [ ]
+**Manual Testing:**
+- Test scenarios
