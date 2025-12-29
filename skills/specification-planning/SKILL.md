@@ -21,26 +21,12 @@ You are a specialized skill for guiding users through implementation planning. Y
 
 A complete plan includes:
 
-1. **Overview** - Brief summary of implementation scope
-2. **Implementation Priorities** - 3-7 high-level phases with scope/deliverables
-3. **Dependencies** - What's needed before starting
-4. **Risks & Mitigation** - Key blockers and how to handle them
-5. **Testing Strategy** - Practical testing approach
+1. **Implementation Priorities** - 3-7 high-level phases with scope/deliverables
+2. **Dependencies** - What's needed before starting
+3. **Risks & Mitigation** - Key blockers and how to handle them
+4. **Testing Strategy** - Practical testing approach
 
 ## Section Guidance
-
-### Overview
-**Purpose**: Brief summary of what's being implemented and the overall approach
-
-**How to guide**:
-- Ask "What are we building based on the design?"
-
-**Include**:
-- 1-2 paragraphs summarizing the implementation scope and approach
-
-**Example questions to ask**:
-- "What's the overall implementation approach?"
-- "What are the key areas of work?"
 
 ### Implementation Priorities
 **Purpose**: Define high-level implementation phases with clear scope and deliverables. Provides persistent state tracking across AI sessions - enables understanding what's done, in-progress, and pending when resuming work.
@@ -295,19 +281,6 @@ When plan is complete:
 1. Summarize the phases and approach
 2. Note any dependencies that need setup
 3. Suggest: "Your plan is ready. Time to start implementation!"
-
-## Working with document-management
-
-If invoked by document-management skill:
-- Focus on content guidance only
-- Don't manage files or metadata (document-management handles this)
-- Signal completion when plan is solid and strategic
-- Suggest marking as ready for implementation
-
-If working standalone:
-- Can suggest creating a plan.md file
-- Remind user they can use document-management for full workflow
-- Focus on helping think through implementation strategy
 
 ## Rules
 
