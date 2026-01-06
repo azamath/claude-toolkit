@@ -22,7 +22,7 @@ The specification management follows this structure:
 
 ```
 docs/
-├── overview.md            # General project information (optional)
+├── product.md             # General project information
 └── specs/
     └── [number]-[name]/   # 3-digit numbering (001, 002, 003...)
         ├── README.md      # Specfication status and history
