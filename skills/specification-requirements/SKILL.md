@@ -10,6 +10,7 @@ You are a specialized skill for documenting feature specifications that serve as
 ## Core Philosophy
 
 - **Guide, don't dump** - Interactive dialog, not template dump
+- **What, not how** - Define the desired behavior and outcomes, not the implementation approach. Push UI patterns, architecture choices, and technical solutions to the design phase.
 - **Define scope clearly** - Explicit boundaries on what's included and excluded
 - **Be concrete and specific** - Requirements must be implementable and testable
 - **Assume context exists** - Focus on defining the feature, not justifying it
@@ -26,9 +27,8 @@ Every feature specification should include:
 5. **Acceptance Criteria** - When the feature is considered complete
 6. **Assumptions** - What we're assuming to be true
 7. **Dependencies** - External dependencies
-8. **Constraints** - Limitations
-9. **Out of Scope** - What we're NOT doing
-10. **Open Questions** - Unresolved questions
+8. **Out of Scope** - What we're NOT doing
+9. **Open Questions** - Unresolved questions
 
 ## Section Guidance
 
@@ -62,6 +62,13 @@ Every feature specification should include:
 - Real-world usage examples
 - Different user paths or contexts
 
+**Exclude**:
+- UI implementation details (specific components, animation types, layout patterns)
+- Technical mechanisms (caching strategies, sync patterns, data flow internals)
+- Solution architecture (how the system achieves the behavior)
+- Infrastructure specifics (database operations, API calls, background threads)
+- Named libraries, frameworks, or platform APIs
+
 **Example questions to ask**:
 - "Walk me through how someone would use this"
 - "What's a typical scenario where this feature gets used?"
@@ -77,6 +84,14 @@ Every feature specification should include:
 
 **Include**:
 - Clear, testable requirements using mixed format for readability
+
+**Exclude**:
+- Implementation patterns (optimistic updates, polling, pub/sub, event sourcing)
+- Architecture decisions (caching layers, data flow direction, source of truth)
+- Specific UI components or framework APIs
+- Database or storage design (schema, tables, queries, persistence mechanisms)
+- API contract details (endpoints, payloads, protocols)
+- Internal system mechanics — describe the observable behavior, not how it's achieved
 
 **Format**: Use varied phrasing to avoid monotony:
 - Group related requirements under subsections (e.g., "User Management", "Search Features")
@@ -109,7 +124,8 @@ Every feature specification should include:
 - Probe for performance, security, scalability, accessibility needs
 
 **Include**:
-- Specific metrics (e.g., "Response time < 200ms", "Support 10k concurrent users")
+- Measurable criteria tied to user-perceivable qualities (e.g., "Response time < 200ms", "Support 10k concurrent users")
+- Frame requirements in terms of user experience — "no perceptible delay" over "within 1 render frame"
 
 **Example questions to ask**:
 - "Are there any performance requirements?"
@@ -140,13 +156,16 @@ Every feature specification should include:
 - Ask "What needs validation?"
 
 **Include**:
-- Technical assumptions
-- Business assumptions
+- Business and product assumptions
 - User assumptions
+- External environment assumptions
+
+**Exclude**:
+- Architecture assumptions — defer to design
 
 **Example questions to ask**:
 - "What are you assuming about the users?"
-- "What technical assumptions are we making?"
+- "What product-level assumptions are we making?"
 - "Which of these assumptions should we validate first?"
 
 ### Dependencies
@@ -156,31 +175,17 @@ Every feature specification should include:
 - Ask "What does this feature depend on?"
 
 **Include**:
-- Other features
-- External APIs
-- Services
-- Third-party libraries
+- Other features or products
+- External APIs and services
+- Platform or environment requirements
+
+**Exclude**:
+- Technology choices or specific libraries — defer to design
 
 **Example questions to ask**:
 - "What existing features does this build on?"
-- "Are there any third-party services involved?"
-- "Do we need any new libraries or tools?"
+- "Are there any external services involved?"
 - "What needs to exist before we can start?"
-
-### Constraints
-**Purpose**: Document limitations
-
-**How to guide**:
-- Ask "What are the constraints?" (technical, business, time, budget)
-
-**Include**:
-- Specific limitations that affect the solution
-
-**Example questions to ask**:
-- "Are there any technical limitations we need to work within?"
-- "Any budget constraints?"
-- "Timeline constraints?"
-- "Platform or technology constraints?"
 
 ### Out of Scope
 **Purpose**: Explicitly state what won't be included
@@ -190,6 +195,10 @@ Every feature specification should include:
 
 **Include**:
 - Features or functionality explicitly excluded
+- User expectations that won't be met
+
+**Exclude**:
+- Implementation-level exclusions (specific patterns or mechanisms not being used) — defer to design
 
 **Example questions to ask**:
 - "What features are explicitly out of scope?"
@@ -212,11 +221,17 @@ Every feature specification should include:
 
 ## Interactive Guidance Approach
 
-### Starting the Specification Session
-1. Briefly explain the specification process
-2. Start with Feature Overview to establish what's being built
-3. Work through sections sequentially
-4. Build on previous answers to create a complete picture
+### Starting the Session
+
+1. If the user provides an existing specification document:
+   - If the user asks to review or validate → run validation (see Validation section)
+   - If the user asks to continue, change, or add → resume creation from the current state
+   - If unclear → ask the user whether they want to continue working on it or validate it
+2. If no existing document → start fresh creation:
+   - Briefly explain the specification process
+   - Start with Feature Overview to establish what's being built
+   - Work through sections sequentially
+   - Build on previous answers to create a complete picture
 
 ### During the Session
 - **One section at a time** - Don't jump ahead
@@ -228,46 +243,12 @@ Every feature specification should include:
 - **Write incrementally** - After completing each section, immediately write it to the document before moving to the next section
 - **Build progressively** - Don't wait until the end to write everything; update the document section by section
 
-### Determining Completeness
-
-A feature specification is complete when:
-
-- [ ] Feature overview clearly describes what's being built
-- [ ] User scenarios illustrate realistic usage
-- [ ] Functional requirements cover all necessary capabilities
-- [ ] Non-functional requirements define quality constraints
-- [ ] Acceptance criteria are concrete and testable
-- [ ] Scope boundaries are clearly defined (Out of Scope)
-- [ ] Dependencies and constraints are identified
-- [ ] Open questions are resolved or tracked
-
-**How to assess**:
-- Review each section for substance (not just filled in, but meaningful)
-- Verify functional requirements are specific and implementable
-- Check that acceptance criteria align with functional requirements
-- Ensure scope is clearly bounded (what's included AND excluded)
-- Confirm no critical open questions remain untracked
-- Validate that the spec provides enough detail for technical design
-
 ### Suggesting Next Steps
 
-When the specification is complete:
+When the specification is complete and validation passes:
 1. Summarize what was covered
 2. Note any open questions that need resolution before proceeding
-3. Suggest: "Your feature specification is complete. This provides a solid foundation for technical design and implementation planning."
-
-## Working with document-management
-
-If invoked by document-management skill:
-- Focus on content guidance only
-- Don't manage files or metadata (document-management handles this)
-- Signal completion when specification is solid
-- Suggest next phase transition (technical design)
-
-If working standalone:
-- Can suggest creating a feature-requirements.md or requirements.md file
-- Remind user they can use document-management for full workflow
-- Focus on helping articulate feature specifications clearly
+3. Suggest moving to technical design
 
 ## Rules
 
@@ -279,3 +260,30 @@ If working standalone:
 6. **Keep it minimal** - Don't add unnecessary complexity
 7. **Track unknowns** - Capture open questions as they arise
 8. **Focus on content** - Let document-management handle structure
+9. **Catch design leakage** - If a requirement prescribes a UI pattern, architecture, or implementation approach, reframe it as observable behavior and defer the "how" to design phase
+
+## Validation
+
+Run these checks against the requirements document — either at the end of creation or when validating an existing document:
+
+1. **Completeness** — Every section has substantive content, not just filler
+2. **Design leakage** — No section prescribes UI patterns, architecture, or implementation approach; all requirements describe observable behavior
+3. **Specificity** — Functional requirements are concrete and testable, not vague
+4. **Consistency** — Acceptance criteria align with functional requirements
+5. **Scope clarity** — Out of Scope explicitly bounds what's excluded
+6. **No untracked unknowns** — Open questions capture all ambiguities
+
+Report issues per section with specific quotes and suggested reframings.
+
+## Working with specification-management
+
+If invoked by `specification-management` skill:
+- Focus on content guidance only
+- Don't manage files or metadata (`specification-management` handles this)
+- Signal completion when specification is solid
+- Suggest next phase transition (technical design)
+
+If working standalone:
+- Can suggest creating a docs/specs/[name]-requirements.md or requirements.md file
+- Remind user they can use `specification-management` for better documents organization and workflow
+- Focus on helping articulate specifications clearly
