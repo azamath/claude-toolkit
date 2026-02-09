@@ -286,4 +286,3 @@ A design document is complete when:
 When design is complete:
 1. Summarize the design approach
 2. Note any open issues to resolve during implementation
-3. Suggest moving to implementation plan

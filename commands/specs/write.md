@@ -1,9 +1,9 @@
 ---
-description: "Create or update specification"
+description: "Specify and write a requirement, design or implementation plan"
 argument-hint: "Describe your feature or requirement to specify"
 ---
 
-**Task:** Create or update specification documents  
+**Task:** Describe a requirement, solution design or plan and write to specification documents depending on user prompt  
 
 **User prompt:** $ARGUMENTS
 

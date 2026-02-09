@@ -54,7 +54,7 @@ pending → in_progress → completed
 
 **Purpose**: Detect current specification status and suggest logical continuation points.
 
-**Common Workflow**: requirements → design → plan
+**Common Workflow**: requirements → design → plan (optional) → implement
 
 ### Understanding Current State
 
@@ -73,8 +73,27 @@ Based on README Documents section status:
 - **All pending** → Suggest starting with requirements
 - **Requirements in_progress** → Suggest continuing requirements work
 - **Requirements completed, Design pending** → Suggest starting design
-- **Design completed, Plan pending** → Suggest starting planning
+- **Design completed, Plan pending** → Assess whether planning is needed (see Planning Assessment)
+- **Design completed, Plan skipped** → Suggest moving to implementation
 - **All completed** → Suggest moving to implementation or reviewing specification
+
+### Planning Assessment
+
+The planning stage is **optional**. After design is completed, assess whether a plan is needed based on the feature's complexity.
+
+**Plan IS needed** when the feature:
+- Requires multiple distinct implementation phases that depend on each other
+- Involves changes across several subsystems or layers (e.g., database + API + UI)
+- Has ordering constraints where some parts must be built and validated before others
+- Carries significant risk that benefits from incremental delivery
+
+**Plan is NOT needed** (skip it) when the feature:
+- Can be implemented in a single pass (write code → test → done)
+- Touches a small, well-defined area of the codebase
+- Has a straightforward implementation path clear from the design
+- Doesn't require phased rollout or incremental validation
+
+When planning is not needed, set Plan status to `skipped` in README.md and suggest moving directly to implementation.
 
 ## README Management
 
