@@ -18,7 +18,8 @@ argument-hint: "Specification number or description"
 **Principles:**
 - When plan exists: execute one phase at a time, update plan.md checkboxes for done tasks
 - When plan is skipped: implement the full feature, then validate
-- Switch to Plan mode before start 
+- Switch to Plan mode before start
+- In the final plan, include a "Pre-implementation" section at the top that instructs to read the full spec files (with absolute paths to requirements.md, design.md, and plan.md if exists) before starting any implementation work
 - Use TodoWrite to break down large tasks
 - Validate the implementation before moving to the next phase
 - Wait for user confirmation where manual testing is required
