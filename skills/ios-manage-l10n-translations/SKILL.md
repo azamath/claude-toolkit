@@ -73,13 +73,24 @@ Read this output carefully — use the `en` value and `comment` to understand wh
 
 ### 3. Create Translations JSON and Apply
 
-Fill in the template from Step 1 with translations and save as `temp/translations_<language_code>.json`:
+Fill in the template from Step 1 with translations and save as `temp/translations_<language_code>.json`.
+
+The template is in **native xcstrings format** — each value is the exact JSON that goes under `strings.<key>.localizations.<lang>`. Fill in the empty `"value"` fields with translations. As a convenience, simple strings can use a plain string instead of a full `stringUnit` object:
 
 ```json
 {
-    "Cancel": "<translated>",
-    "Done": "<translated>",
-    "Delete\nAll": "<translated>\n<translated>"
+    "Cancel": "Отмена",
+    "Done": "Готово",
+    "items_count_%lld": {
+        "variations": {
+            "plural": {
+                "one":   { "stringUnit": { "state": "translated", "value": "%lld элемент" } },
+                "few":   { "stringUnit": { "state": "translated", "value": "%lld элемента" } },
+                "many":  { "stringUnit": { "state": "translated", "value": "%lld элементов" } },
+                "other": { "stringUnit": { "state": "translated", "value": "%lld элементов" } }
+            }
+        }
+    }
 }
 ```
 
@@ -97,11 +108,15 @@ python3 scripts/add_translations.py --overwrite <LANG_CODE> temp/translations_<l
 
 A backup is saved to `temp/Localizable.xcstrings.backup` before modification.
 
+**IMPORTANT — Xcode JSON format:** The `.xcstrings` file uses a specific JSON style with ` : ` (spaces around colon) as the key-value separator. The script preserves this automatically when writing. **Never edit the `.xcstrings` file directly** with generic JSON formatting — always use `add_translations.py`, which writes with the correct separators.
+
 **Notes on the JSON file:**
 - Must include EVERY key from the template
-- Strings with newlines use literal `\n` (JSON escape)
+- Fill in empty `"value"` fields — keep the surrounding structure unchanged
+- Plain strings are auto-wrapped in `{"stringUnit": {"state": "translated", "value": "..."}}` for convenience
 - Preserve format specifiers exactly: `%@`, `%lld`, `%d`, `%.2f`
 - Preserve interpolation patterns: `\(variableName)`
+- Strings with newlines use literal `\n` (JSON escape)
 
 ### 4. Verify Translation Coverage
 
@@ -136,15 +151,17 @@ Remove the translations JSON after successful execution:
 rm temp/translations_<language_code>.json
 ```
 
-## Plural Forms
+## Plural Forms & Complex Structures
 
-The xcstrings format supports `variations.plural` for count-dependent strings (e.g., "1 day" vs "5 days"). Languages like Russian (3 plural forms) and Arabic (6 forms) produce incorrect grammar without this.
+The xcstrings format supports `variations.plural`, `substitutions` (multi-arg plurals), device variations, and more. The scripts are **schema-agnostic** — they pass through any structure Xcode supports.
 
 ### How It Works
 
 1. `extract_keys.py` flags strings containing `%lld` or `%d` with `"needs_plural": true` in context output
-2. `extract_keys.py --template <lang>` auto-generates the correct plural structure based on CLDR categories for the target language
-3. `add_translations.py` accepts both simple strings and plural objects in the same JSON
+2. `extract_keys.py --template <lang>` generates templates in **native xcstrings format** — copying the English localization structure, blanking values, and adjusting plural categories for the target language
+3. `add_translations.py` writes each value as-is into `localizations.<lang>` (plain strings are auto-wrapped in `stringUnit`)
+
+Because the template copies the actual English structure, substitutions and any other xcstrings features are preserved automatically — just fill in the translated values.
 
 ### CLDR Plural Categories by Language
 
@@ -174,24 +191,6 @@ The xcstrings format supports `variations.plural` for count-dependent strings (e
 | Vietnamese | vi | other |
 | Chinese (Simplified) | zh-Hans | other |
 | Chinese (Traditional) | zh-Hant | other |
-
-### Example: Mixed Translations JSON
-
-```json
-{
-    "Cancel": "Отмена",
-    "items_count_%lld": {
-        "plural": {
-            "one": "%lld элемент",
-            "few": "%lld элемента",
-            "many": "%lld элементов",
-            "other": "%lld элементов"
-        }
-    }
-}
-```
-
-Simple strings use a string value; plural strings use a `{"plural": {...}}` object with one entry per CLDR category.
 
 ## Translation Guidelines
 

@@ -7,6 +7,7 @@ Usage:
     python3 extract_keys.py <xcstrings_path> --template <lang> # Output a translation template for a language
 """
 
+import copy
 import json
 import re
 import sys
@@ -73,9 +74,51 @@ def _get_en_value(entry, key):
     return en_unit.get("value", key)
 
 
+def _blank_values(obj):
+    """Recursively blank out 'value' fields and set 'state' to 'translated'."""
+    if isinstance(obj, dict):
+        result = {}
+        for k, v in obj.items():
+            if k == "value" and isinstance(v, str):
+                result[k] = ""
+            elif k == "state":
+                result[k] = "translated"
+            else:
+                result[k] = _blank_values(v)
+        return result
+    if isinstance(obj, list):
+        return [_blank_values(item) for item in obj]
+    return obj
+
+
+def _adjust_plural_categories(obj, categories):
+    """Replace plural category keys with target language's CLDR categories.
+
+    Walks the structure looking for any 'plural' dict (top-level variations
+    or inside substitutions) and replaces its keys.
+    """
+    if not isinstance(obj, dict):
+        return
+    for key, val in list(obj.items()):
+        if key == "plural" and isinstance(val, dict):
+            # Use 'other' (or any existing) as the shape template
+            shape = val.get("other", next(iter(val.values())))
+            obj[key] = {cat: copy.deepcopy(shape) for cat in categories}
+        elif isinstance(val, dict):
+            _adjust_plural_categories(val, categories)
+
+
+def _make_template_entry(en_loc, categories):
+    """Create a blank localization entry from English, adjusted for target language."""
+    tmpl = _blank_values(copy.deepcopy(en_loc))
+    _adjust_plural_categories(tmpl, categories)
+    return tmpl
+
+
 if template_lang:
-    # Output a translation template JSON for the LLM to fill in
-    # Only includes keys that don't already have this language
+    # Output a translation template in native xcstrings localization format.
+    # Each value is what goes under strings.<key>.localizations.<lang>.
+    # Only includes keys that don't already have this language.
     categories = PLURAL_CATEGORIES.get(template_lang, ["one", "other"])
     template = {}
     for key in sorted(data["strings"].keys()):
@@ -83,11 +126,24 @@ if template_lang:
         if template_lang in entry.get("localizations", {}):
             continue
 
-        en_value = _get_en_value(entry, key)
-        if _needs_plural(en_value):
-            template[key] = {"plural": {cat: "" for cat in categories}}
+        en_loc = entry.get("localizations", {}).get("en")
+        if en_loc:
+            # Copy English structure, blank values, adjust plural categories
+            template[key] = _make_template_entry(en_loc, categories)
         else:
-            template[key] = ""
+            # No English localization — generate from heuristics
+            en_value = _get_en_value(entry, key)
+            if _needs_plural(en_value):
+                template[key] = {
+                    "variations": {
+                        "plural": {
+                            cat: {"stringUnit": {"state": "translated", "value": ""}}
+                            for cat in categories
+                        }
+                    }
+                }
+            else:
+                template[key] = {"stringUnit": {"state": "translated", "value": ""}}
     print(json.dumps(template, ensure_ascii=False, indent=2))
 else:
     # Output context JSON: key -> {en, comment, needs_plural}

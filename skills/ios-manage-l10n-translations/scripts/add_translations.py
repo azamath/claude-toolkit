@@ -9,24 +9,26 @@ Usage:
     lang_code:          ISO 639-1 language code (e.g., "ja", "ru", "zh-Hans")
     translations_json:  Path to a JSON file mapping string keys to translated values
 
-The translations JSON file should look like:
+The translations JSON maps each key to its xcstrings localization value — the
+exact JSON that goes under strings.<key>.localizations.<lang>.  Any structure
+Xcode supports (stringUnit, variations, substitutions, etc.) works as-is.
+
+As a convenience, a plain string is auto-wrapped in a stringUnit:
+
 {
     "Cancel": "Отмена",
     "Save": "Сохранить",
-    "Add\nPhoto": "Добавить\nФото",
     "event.status.inDays": {
-        "plural": {
-            "one": "Через %lld день",
-            "few": "Через %lld дня",
-            "many": "Через %lld дней",
-            "other": "Через %lld дней"
+        "variations": {
+            "plural": {
+                "one":   { "stringUnit": { "state": "translated", "value": "Через %lld день" } },
+                "few":   { "stringUnit": { "state": "translated", "value": "Через %lld дня" } },
+                "many":  { "stringUnit": { "state": "translated", "value": "Через %lld дней" } },
+                "other": { "stringUnit": { "state": "translated", "value": "Через %lld дней" } }
+            }
         }
     }
 }
-
-Values can be:
-- A string for simple translations (stringUnit)
-- A dict with "plural" key for plural variations
 """
 
 import json
@@ -83,25 +85,12 @@ for key, value in translations.items():
         skipped_exists += 1
         continue
 
+    # Plain string shorthand: auto-wrap in stringUnit
     if isinstance(value, str):
-        # Simple string translation
-        data["strings"][key]["localizations"][lang_code] = {
-            "stringUnit": {"state": "translated", "value": value}
-        }
-    elif isinstance(value, dict) and "plural" in value:
-        # Plural variations
-        plural_forms = value["plural"]
-        plural_units = {}
-        for category, text in plural_forms.items():
-            plural_units[category] = {
-                "stringUnit": {"state": "translated", "value": text}
-            }
-        data["strings"][key]["localizations"][lang_code] = {
-            "variations": {"plural": plural_units}
-        }
-    else:
-        print(f"  WARN: unrecognized value format for key: {repr(key)}")
-        continue
+        value = {"stringUnit": {"state": "translated", "value": value}}
+
+    # Pass-through: value is the raw xcstrings localization blob
+    data["strings"][key]["localizations"][lang_code] = value
 
     if is_overwrite:
         overwritten += 1

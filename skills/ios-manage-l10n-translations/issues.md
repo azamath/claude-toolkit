@@ -24,17 +24,17 @@ Priority: `P0` = fix before next use, `P1` = fix soon, `P2` = nice to have
 
 ## ~~P1: Pluralization & Variations~~ FIXED
 
-- ~~**Only handles simple `stringUnit`**~~ — `add_translations.py` now accepts plural objects (`{"plural": {"one": "...", "other": "..."}}`). Writes `variations.plural` structure to xcstrings.
-- ~~**Complex plural forms ignored**~~ — `extract_keys.py` auto-detects `%lld`/`%d` strings and generates correct CLDR plural categories per language (e.g., Russian: one/few/many/other, Arabic: zero/one/two/few/many/other). `verify_coverage.py` counts plural-translated strings as translated.
+- ~~**Only handles simple `stringUnit`**~~ — Scripts are now schema-agnostic. `add_translations.py` passes through any xcstrings localization structure as-is (plain strings auto-wrapped in `stringUnit`). `extract_keys.py --template` copies the English localization structure, blanks values, and adjusts plural categories for the target language.
+- ~~**Complex plural forms ignored**~~ — `extract_keys.py` auto-detects `%lld`/`%d` strings and generates correct CLDR plural categories per language. `verify_coverage.py` recursively detects `stringUnit` at any nesting depth.
 
 ## P2: Translation Quality
 
 - **Quality degrades at scale** — Translating hundreds of strings in one pass, especially for languages the LLM is weaker in (Thai, Hindi, Arabic), leads to lower quality.
 - **No native speaker review step** — There's no built-in workflow for human review of generated translations.
 
-## P2: String Substitutions
+## ~~P2: String Substitutions~~ FIXED
 
-- **No positional format specifier reordering** — Strings with `%@` or `%lld` may need reordering in some languages. The script doesn't handle positional specifiers (`%1$@`, `%2$@`) when word order differs from English.
+- ~~**No positional format specifier reordering**~~ — Scripts are now schema-agnostic pass-throughs. Substitutions, positional specifiers, and any xcstrings structure are preserved as-is from the template and written directly. The template copies the English localization structure (including `substitutions` keys) and blanks values for the translator to fill in.
 
 ## P2: Verification Gaps
 

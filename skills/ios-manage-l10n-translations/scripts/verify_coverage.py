@@ -23,20 +23,17 @@ with open(xcstrings_path, "r") as f:
 total = len(data["strings"])
 
 
-def _is_translated(localization):
-    """Check if a localization entry counts as translated.
+def _is_translated(obj):
+    """Recursively check if a localization entry contains a stringUnit anywhere.
 
-    Supports both:
-    - stringUnit: {"state": "translated", "value": "..."}
-    - variations.plural: {"other": {"stringUnit": {...}}, ...}
+    Works for any xcstrings structure: simple stringUnit, variations.plural,
+    substitutions with nested plurals, device variations, etc.
     """
-    if "stringUnit" in localization:
+    if not isinstance(obj, dict):
+        return False
+    if "stringUnit" in obj:
         return True
-    variations = localization.get("variations", {})
-    plural = variations.get("plural", {})
-    if "other" in plural:
-        return True
-    return False
+    return any(_is_translated(v) for v in obj.values())
 
 
 # Collect per-language counts
