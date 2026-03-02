@@ -1,0 +1,18 @@
+{
+  "name": "azamath",
+  "owner": {
+    "name": "Azamat Holmeer",
+    "email": "azamat.holmeer@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "sdd",
+      "source": {
+        "source": "github",
+        "repo": "azamath/sdd-plugin"
+      },
+      "description": "SDD - Specification Driven Development",
+      "version": "0.1.0"
+    }
+  ]
+}
