@@ -1,12 +1,11 @@
 ---
 description: Convention for organizing project specification documents under /docs, splitting in-progress changes from settled feature specs.
-disable-model-invocation: true
 user-invocable: true
 ---
 
-Specification documents live under `/docs` in two forms: in-progress changes and settled feature specs.
+Specification documents live under `/docs` in two forms: in-progress change-specs and final feature specs.
 
-## Changes — work in progress
+## Change-specs — work in progress
 
 Location: `/docs/changes/<NNN>-<slug>/`
 
@@ -18,7 +17,7 @@ Each change is a folder, numbered incrementally with three digits (`001-add-auth
 
 Other files are fine when the change calls for them (`api.md`, `schema.md`, etc.). The naming convention is a default, not a rule.
 
-## Specs — settled state
+## Feature-specs — applied state
 
 Location: `/docs/specs/<feature-name>/`
 
