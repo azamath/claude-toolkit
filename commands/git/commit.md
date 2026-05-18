@@ -76,8 +76,9 @@ Avoid
 ## Allowed Types
 
 | Type     | Description                           |
-| -------- | ------------------------------------- |
+|----------|---------------------------------------|
 | feat     | New feature                           |
+| upd      | Update to an existing feature         |
 | fix      | Bug fix                               |
 | chore    | Maintenance (e.g., tooling, deps)     |
 | docs     | Documentation changes                 |
