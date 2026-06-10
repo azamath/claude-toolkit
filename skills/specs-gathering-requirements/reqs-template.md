@@ -14,19 +14,25 @@ status: draft
 <the problem and goal>
 
 ## Functional requirements
-<!-- Structured headings and bullets describing what the system must do.
-     Group related behavior under sub-headings. Each bullet is one testable
-     statement of need — no implementation detail. -->
-- <capability or behavior the system must provide>
+<!-- The heading is the contract ("the system must…") — no binding line.
+     Start each bullet at the verb, imperative mood. One line per requirement —
+     one actor, one behavior, one testable claim. Sub-bullets only for genuine
+     conditions/exceptions.
+     DEFAULT: a flat list with no sub-headings — this is the common case.
+     Split into ### sub-headings ONLY when the change spans 2+ major features,
+     where a feature maps to its own /docs/specs/<feature-name>/ entry
+     (e.g. ### Authentication, ### Checkout). Flows/validation/error-handling are
+     NOT features — never invent headings for them. -->
+- <verb-first behavior, e.g. "Let a user reset their password without contacting support.">
 
 ## Non-functional requirements
-<!-- Performance, security, accessibility, scalability, constraints.
-     Keep only the categories that apply; delete the rest. -->
-- <quality or constraint the system must hold to>
+<!-- Qualities, not actions. Shape: "<aspect>: <measurable bound>".
+     Keep only the categories that apply; delete the rest — no "N/A" lines. -->
+- <aspect>: <measurable bound, e.g. "Performance: search returns within 500 ms (p95).">
 
 ## Acceptance criteria
 <!-- A checklist of done-criteria. Each item is something you could verify
-     as true or false. Group by functional area when the list is long. -->
+     as true or false. Group by feature, mirroring the functional sub-headings. -->
 - [ ] <observable, testable condition>
 
 ## Out of scope
