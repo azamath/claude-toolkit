@@ -66,6 +66,16 @@ Rules:
 
 **When the imperative would distort the meaning** — a constraint that isn't a system action, or a rule about an external actor — fall back to a plain declarative line. Prefer the imperative; don't mangle meaning to obey it.
 
+## Before you interview
+
+Two things settle *where requirements come from* before you ask a single question — get them right and the interview stays requirement-first on its own.
+
+**Ground in the existing requirements, not the code.** Read what is *already required* so you don't re-derive settled ground from the user or mistake an existing need for a new one: the durable feature specs, and the requirements of any in-progress changes. These are the requirement register — *what the system already does and what was already resolved* — so they sharpen requirement-first thinking rather than biasing it. (See `specs-organization` for where these live; read only the requirement documents, not design/architecture notes.)
+
+**Take the need from the change, not from the implementation.** The requirements come from *what must be true after this change* — the desired behavior and the user's goal — never from how the system is built today. Do not read the code to source questions: it is the starting point you are moving *away from*, and letting it drive you anchors the change to the status quo, biases it toward small diffs, and dresses design details up as requirements ("the code caches X — should it still?"). Reconciling requirements against the existing implementation is a separate concern, not part of gathering them.
+
+Apply to a candidate *question* the same test the sections above apply to a *statement*: "would this still matter if the system were rebuilt a completely different way?" If no, it's design — keep it out of the interview.
+
 ## How to interview
 
 Work **one topic at a time**. Ask a focused round of questions, write down what you learned, then move to the next topic. Do not dump every question at once — requirements surface in layers, and each answer reshapes the next question.
