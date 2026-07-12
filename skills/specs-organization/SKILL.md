@@ -28,3 +28,9 @@ Organized by feature, not by change. This is the durable record of what the syst
 A change folder exists while the work is in progress. Once the work lands, its content belongs in `/docs/specs/<feature-name>/` — the change folder itself moves to `/docs/changes/.archive/<NNN>-<slug>/` as historical record.
 
 The archive preserves history without cluttering the active changes list. `/docs/specs/` remains the single source of truth for the system's current state.
+
+## Document templates
+
+The `templates/` directory beside this skill holds document templates:
+
+- `reqs.md` — the requirements doc

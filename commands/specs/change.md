@@ -21,4 +21,4 @@ argument-hint: "change description"
    - user may explicitly indicate if it is a separate change;
    - a change scope may be an addition or fix to a current change, check the list and make a decision.
 
-3. Gather requirements — grounded in the existing specs, **not** the implementation. **Load the `specs-gathering-requirements` skill** and follow it: interview the user one topic at a time and write the requirements doc into the change folder.
+3. Gather requirements — grounded in the existing specs, **not** the implementation. **Load the `specs-gathering-requirements` skill** and follow it to produce the requirements doc in the change folder.
