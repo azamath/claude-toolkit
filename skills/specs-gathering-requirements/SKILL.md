@@ -29,7 +29,6 @@ Suggested progression of topics (adapt to the change):
 2. **Functional behavior** — what must the system *do*? Walk the main flows and the important edge cases.
 3. **Non-functional needs** — performance, security, accessibility, scale, compatibility constraints. Ask only about categories that plausibly apply.
 4. **Boundaries** — what is explicitly *out of scope*? What's deferred to a later change?
-5. **Acceptance** — how will we know each requirement is met?
 
 Stop when the picture is coherent and the open questions are written down, not when every detail is resolved. Unknowns are allowed — record them as open questions rather than guessing.
 
@@ -39,11 +38,11 @@ When you create the requirements document, start from the `templates/reqs.md` te
 
 Its `<!-- ... -->` comments are guidance, not content — delete them in the final doc. Replace every `<angle-bracket>` placeholder with real content, and drop any section or category that doesn't apply.
 
-Write every requirement in the grammar from `specs-writing-requirements` — including its **Keeping the set lean** rules. Express acceptance criteria as a checklist of done-criteria.
+Write every requirement in the grammar from `specs-writing-requirements` — including its **Keeping the set lean** rules.
 
 ## Lifecycle note
 
-When this change is later applied to the durable feature specs, the registers split (see `specs-applying-change`): functional and non-functional requirements and any unresolved requirement-related open questions **carry over** into the feature spec, while acceptance criteria and out-of-scope items stay with the archived change. Write the requirements so that separation is clean — keep durable needs distinct from this-change-only bookkeeping.
+When this change is later applied to the durable feature specs, the registers split (see `specs-applying-change`): functional and non-functional requirements and any unresolved requirement-related open questions **carry over** into the feature spec, while out-of-scope items stay with the archived change. Write the requirements so that separation is clean — keep durable needs distinct from this-change-only bookkeeping.
 
 ## Related skills
 - `specs-writing-requirements` — the authoring craft: what a requirement is, what it isn't, and the grammar for writing one

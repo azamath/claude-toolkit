@@ -16,7 +16,6 @@ A change spec describes *how the system got somewhere*. A spec describes *what t
 
 **Don't carry (goes to archive):**
 - Out of scope items;
-- Acceptance/done criteria;
 - Design, models, api and components implementation notes;
 - Architectural decisions;
 

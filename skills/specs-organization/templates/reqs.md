@@ -23,10 +23,6 @@ status: draft
 <!-- Qualities or constraints the system must hold to. -->
 - <requirement>
 
-## Acceptance criteria
-<!-- A checklist of done-criteria — each item verifiable as true or false. -->
-- [ ] <observable, testable condition>
-
 ## Out of scope
 <!-- Explicit list of what this change does NOT cover, and what is deferred. -->
 - <thing this change does not address>
