@@ -22,3 +22,7 @@ argument-hint: "change description"
    - a change scope may be an addition or fix to a current change, check the list and make a decision.
 
 3. Gather requirements — grounded in the existing specs, **not** the implementation. **Load the `specs-gathering-requirements` skill** and follow it to produce the requirements doc in the change folder.
+
+4. Settle the architectural decisions, before the design. **Load the `specs-architectural-decisions` skill** and write an ADR for each choice that meets its bar. Most changes will have none.
+
+5. Design how to build it, within the decisions from step 4. Produce `design.md` in the change folder.
