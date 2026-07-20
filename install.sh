@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Claude Toolkit Installation Script
-# Symlinks toolkit components into global Claude configuration
+# Symlinks toolkit components individually into global Claude configuration
 
 set -e
 
@@ -21,34 +21,77 @@ if [ ! -d "${CLAUDE_CONFIG_DIR}" ]; then
     mkdir -p "${CLAUDE_CONFIG_DIR}"
 fi
 
-# Function to create symlink
-create_symlink() {
-    local source_dir="${TOOLKIT_DIR}/$1"
-    local target_dir="${CLAUDE_CONFIG_DIR}/$1"
+# Link a single item, creating parent directories as needed
+# $1 = path relative to TOOLKIT_DIR
+link_item() {
+    local rel="$1"
+    local source="${TOOLKIT_DIR}/${rel}"
+    local target="${CLAUDE_CONFIG_DIR}/${rel}"
 
-    if [ -L "${target_dir}" ]; then
-        echo "✓ Symlink already exists: $1"
-        echo "  Points to: $(readlink "${target_dir}")"
-    elif [ -e "${target_dir}" ]; then
-        echo "⚠ Warning: $1 already exists and is not a symlink"
-        echo "  Please backup and remove: ${target_dir}"
-        return 1
+    mkdir -p "$(dirname "${target}")"
+
+    if [ -L "${target}" ]; then
+        if [ "$(readlink "${target}")" = "${source}" ]; then
+            echo "✓ Already linked: ${rel}"
+        else
+            echo "⚠ Symlink exists but points elsewhere: ${rel}"
+            echo "  Points to: $(readlink "${target}")"
+        fi
+    elif [ -e "${target}" ]; then
+        echo "⚠ Warning: ${rel} already exists and is not a symlink"
+        echo "  Please backup and remove: ${target}"
     else
-        echo "Creating symlink: $1"
-        ln -s "${source_dir}" "${target_dir}"
-        echo "✓ Created: ${target_dir} -> ${source_dir}"
+        ln -s "${source}" "${target}"
+        echo "✓ Linked: ${rel}"
     fi
 }
 
-# Create symlinks for each component
+# Link every command (leaf .md files, namespace directories recreated as real dirs)
+install_commands() {
+    [ -d "${TOOLKIT_DIR}/commands" ] || return 0
+    echo "Commands:"
+    local found=0
+    while IFS= read -r file; do
+        found=1
+        link_item "commands/${file#./}"
+    done < <(cd "${TOOLKIT_DIR}/commands" && find . -type f -name '*.md' | sed 's|^\./||' | sort)
+    [ "${found}" -eq 0 ] && echo "- none found"
+    echo ""
+}
+
+# Link every agent (leaf .md files)
+install_agents() {
+    [ -d "${TOOLKIT_DIR}/agents" ] || return 0
+    echo "Agents:"
+    local found=0
+    while IFS= read -r file; do
+        found=1
+        link_item "agents/${file#./}"
+    done < <(cd "${TOOLKIT_DIR}/agents" && find . -type f -name '*.md' | sed 's|^\./||' | sort)
+    [ "${found}" -eq 0 ] && echo "- none found"
+    echo ""
+}
+
+# Link every skill as a whole directory (skills bundle SKILL.md plus resources)
+install_skills() {
+    [ -d "${TOOLKIT_DIR}/skills" ] || return 0
+    echo "Skills:"
+    local found=0
+    while IFS= read -r dir; do
+        found=1
+        link_item "skills/${dir}"
+    done < <(cd "${TOOLKIT_DIR}/skills" && find . -mindepth 1 -maxdepth 1 -type d | sed 's|^\./||' | sort)
+    [ "${found}" -eq 0 ] && echo "- none found"
+    echo ""
+}
+
 echo "Installing components..."
 echo ""
 
-create_symlink "commands"
-create_symlink "agents"
-create_symlink "skills"
+install_commands
+install_agents
+install_skills
 
-echo ""
 echo "Installation complete!"
 echo ""
 echo "Your toolkit components are now available globally."
