@@ -1,6 +1,7 @@
 ---
 description: The craft of writing a good requirement — what counts as a requirement versus a design detail, and the grammar for functional and non-functional requirements. Use when authoring, reviewing, or critiquing requirement statements.
 user-invocable: true
+disable-model-invocation: true
 ---
 
 # Writing requirements
