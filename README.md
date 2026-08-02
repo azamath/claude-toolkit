@@ -31,7 +31,11 @@ Instead of duplicating commands, agents, and skills across projects, maintain th
 
 ## Plugins
 
-No plugins are published yet. To add one, create `plugins/<name>/` with a `.claude-plugin/plugin.json`
+Published plugins:
+
+- **specs** — specification and product documentation components.
+
+To add one, create `plugins/<name>/` with a `.claude-plugin/plugin.json`
 manifest, then add an entry to `.claude-plugin/marketplace.json` with `"source": "./plugins/<name>"`.
 
 Install this repo as a marketplace with:

@@ -4,5 +4,11 @@
     "name": "Azamat Holmeer",
     "email": "azamat.holmeer@gmail.com"
   },
-  "plugins": []
+  "plugins": [
+    {
+      "name": "specs",
+      "source": "./plugins/specs",
+      "description": "Specification and product documentation components for Claude Code"
+    }
+  ]
 }

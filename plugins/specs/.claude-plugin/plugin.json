@@ -1,0 +1,9 @@
+{
+  "name": "specs",
+  "description": "Specification and product documentation components for Claude Code",
+  "version": "0.1.0",
+  "author": {
+    "name": "Azamat Holmeer",
+    "email": "azamat.holmeer@gmail.com"
+  }
+}
