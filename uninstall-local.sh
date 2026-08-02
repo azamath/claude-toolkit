@@ -1,15 +1,16 @@
 #!/bin/bash
 
-# Claude Toolkit Uninstallation Script
+# Claude Toolkit Local Uninstallation Script
 # Removes individual symlinks pointing back into this toolkit
 
 set -e
 
 TOOLKIT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LOCAL_DIR="${TOOLKIT_DIR}/local"
 CLAUDE_CONFIG_DIR="${HOME}/.claude"
 
-echo "Claude Toolkit Uninstaller"
-echo "=========================="
+echo "Claude Toolkit Local Uninstaller"
+echo "================================"
 echo ""
 
 # Remove a symlink only if it points into this toolkit
@@ -37,13 +38,13 @@ unlink_item() {
     fi
 }
 
-# Remove links for a component, mirroring what install.sh created
+# Remove links for a component, mirroring what install-local.sh created
 # $1 = component dir, $2 = find expression type ("files" or "dirs")
 uninstall_component() {
     local component="$1"
     local kind="$2"
 
-    [ -d "${TOOLKIT_DIR}/${component}" ] || return 0
+    [ -d "${LOCAL_DIR}/${component}" ] || return 0
     echo "${component}:"
 
     local found=0
@@ -51,12 +52,12 @@ uninstall_component() {
         while IFS= read -r file; do
             found=1
             unlink_item "${component}/${file}"
-        done < <(cd "${TOOLKIT_DIR}/${component}" && find . -type f -name '*.md' | sed 's|^\./||' | sort)
+        done < <(cd "${LOCAL_DIR}/${component}" && find . -type f -name '*.md' | sed 's|^\./||' | sort)
     else
         while IFS= read -r dir; do
             found=1
             unlink_item "${component}/${dir}"
-        done < <(cd "${TOOLKIT_DIR}/${component}" && find . -mindepth 1 -maxdepth 1 -type d | sed 's|^\./||' | sort)
+        done < <(cd "${LOCAL_DIR}/${component}" && find . -mindepth 1 -maxdepth 1 -type d | sed 's|^\./||' | sort)
     fi
     [ "${found}" -eq 0 ] && echo "- none found"
 

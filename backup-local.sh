@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Claude Toolkit Backup Script
+# Claude Toolkit Local Backup Script
 # Backs up existing directories in global Claude configuration
 
 set -e
@@ -8,8 +8,8 @@ set -e
 CLAUDE_CONFIG_DIR="${HOME}/.claude"
 BACKUP_SUFFIX=".backup"
 
-echo "Claude Toolkit Backup"
-echo "====================="
+echo "Claude Toolkit Local Backup"
+echo "==========================="
 echo ""
 echo "Claude config directory: ${CLAUDE_CONFIG_DIR}"
 echo ""
@@ -51,5 +51,5 @@ backup_directory "skills"
 echo ""
 echo "Backup complete!"
 echo ""
-echo "You can now run ./install.sh to create the symlinks."
+echo "You can now run ./install-local.sh to create the symlinks."
 echo "To restore backups later, rename the .backup directories back."
