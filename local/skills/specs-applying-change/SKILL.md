@@ -22,7 +22,6 @@ A change spec describes *how the system got somewhere*. A spec describes *what t
 ## How to apply specifications
 - For changes that introduce a new feature - create new feature spec;
 - If applying change spec complements, fixes or updates existing feature - merge into existing feature spec;
-- When merging or rewriting requirements into a feature spec, keep them in the grammar from `specs-writing-requirements`;
 
 ## How to apply ADRs
 - Move each ADR from the change's `adrs/` folder to `/docs/adrs/`, keeping its filename;
@@ -36,4 +35,3 @@ A change spec describes *how the system got somewhere*. A spec describes *what t
 
 ## Related skills
 - `specs-organization` - load in order to learn how to organize spec directories
-- `specs-writing-requirements` - the grammar for requirement statements carried into feature specs

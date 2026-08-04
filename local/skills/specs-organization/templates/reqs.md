@@ -5,8 +5,7 @@ status: draft
 <!-- TEMPLATE — copy this structure into the requirements doc (reqs.md).
      <!- - ... - -> comments describe what each section holds: delete them.
      Replace every <angle-bracket> placeholder with real content, and drop
-     any section that doesn't apply.
-     For HOW to phrase each requirement, see the specs-writing-requirements skill. -->
+     any section that doesn't apply. -->
 
 
 # Requirements: <change name>
