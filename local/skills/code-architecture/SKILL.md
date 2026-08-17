@@ -17,6 +17,7 @@ the current task needs.
 
 - **`references/folder-organization/principles.md`** — where files and folders go: top-level project layout, how to group code (by feature vs. by layer), shared code, naming, and where new code should live. Read when setting up a new project's structure, adding a feature and unsure where it belongs, or critiquing/refactoring an existing layout. Start here for any folder question, then read the matching stack file below.
   - **`references/folder-organization/nextjs.md`** — concrete Next.js App Router layout: how the framework-owned `app/` directory and reserved route filenames coexist with your domain-organized `features/`. Read when working in a Next.js project.
+  - **`references/folder-organization/monorepos.md`** — the top level of a monorepo: how to split it across independently deployed parts. Read when setting up or restructuring a repo that holds several deployable units.
 
 <!--
 Add a bullet per topic. Keep each to: the file path + a one-line trigger describing
