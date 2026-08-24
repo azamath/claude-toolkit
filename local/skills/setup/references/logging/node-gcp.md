@@ -28,8 +28,11 @@ import { createGcpLoggingPinoConfig } from '@google-cloud/pino-logging-gcp-confi
 // K_SERVICE is set by the platform on Cloud Run / Cloud Run functions
 const onGcp = process.env.K_SERVICE !== undefined;
 
+// defaults to silent in test environments
+const defaultLevel = process.env.NODE_ENV === 'test' ? 'silent' : 'info';
+
 const options: LoggerOptions = {
-  level: process.env.LOG_LEVEL ?? 'info',
+  level: process.env.LOG_LEVEL ?? defaultLevel,
   // strip secrets before they can reach a log sink
   redact: {
     paths: ['token', 'password', 'secret', '*.token', '*.password', '*.secret'],
@@ -55,6 +58,8 @@ export const logger = pino(
 ```
 
 `serviceContext` is what attributes errors to a service in Error Reporting; `K_SERVICE` and `K_REVISION` are set by the platform.
+
+Tests run silent; `LOG_LEVEL` still overrides. The test runner must set `NODE_ENV=test` — vitest does so itself.
 
 `redact` is a backstop, not a licence — rule 8 still applies. It catches the field that slips through in an object you didn't inspect, and only for the paths you list.
 
