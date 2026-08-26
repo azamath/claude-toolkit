@@ -8,9 +8,8 @@ Your task is to help the user to generate a commit message and commit the change
 
 ## Guidelines
 
-- DO NOT add any ads such as "Generated with [Claude Code](https://claude.ai/code)"
-- Generate the message only for what will actually be in the commit.
-- Follow the rules below for the commit message.
+- Stage changes according to the staging behavior below.
+- **Load the `git-committing` skill** and follow it to author the commit message.
 
 ## Staging behavior
 
@@ -32,57 +31,3 @@ Arguments: `$ARGUMENTS`
      - If **all** changes belong to the same unit of work, `git add -A` is fine.
      - Otherwise, stage explicitly by path with `git add -- <paths>` and leave unrelated changes untouched.
      - Never use `git add -A` / `git add .` when there are unrelated or suspicious changes in the worktree.
-
-
-## Format
-
-```
-<type>:<space><message title>
-
-<bullet points summarizing what was updated>
-```
-
-## Example Titles
-
-```
-feat(auth): add JWT login flow
-fix(ui): handle null pointer in sidebar
-refactor(api): split user controller logic
-docs(readme): add usage section
-```
-
-## Example with Title and Body
-
-```
-feat(auth): add JWT login flow
-
-- Implemented JWT token validation logic
-- Added documentation for the validation component
-```
-
-## Rules
-
-* title is lowercase, no period at the end.
-* Title should be a clear summary, max 50 characters.
-* Use the body (optional) to explain *why*, not just *what*.
-* Bullet points should be concise and high-level.
-
-Avoid
-
-* Vague titles like: "update", "fix stuff"
-* Overly long or unfocused titles
-* Excessive detail in bullet points
-
-## Allowed Types
-
-| Type     | Description                           |
-|----------|---------------------------------------|
-| feat     | New feature                           |
-| upd      | Update to an existing feature         |
-| fix      | Bug fix                               |
-| chore    | Maintenance (e.g., tooling, deps)     |
-| docs     | Documentation changes                 |
-| refactor | Code restructure (no behavior change) |
-| test     | Adding or refactoring tests           |
-| style    | Code formatting (no logic change)     |
-| perf     | Performance improvements              |
