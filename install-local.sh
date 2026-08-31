@@ -48,6 +48,30 @@ link_item() {
     fi
 }
 
+# Remove links this toolkit created whose source is gone
+# $1 = component dir under CLAUDE_CONFIG_DIR
+prune_component() {
+    local component="$1"
+    local root="${CLAUDE_CONFIG_DIR}/${component}"
+
+    [ -d "${root}" ] || return 0
+    if [ -L "${root}" ]; then
+        return 0
+    fi
+
+    while IFS= read -r link; do
+        local rel="${component}/${link#./}"
+        local dest
+        dest="$(readlink "${root}/${link#./}")"
+        case "${dest}" in
+            "${TOOLKIT_DIR}"/*)
+                rm "${root}/${link#./}"
+                echo "✓ Pruned: ${rel}"
+                ;;
+        esac
+    done < <(cd "${root}" && find . -type l ! -exec test -e {} \; -print | sed 's|^\./||' | sort)
+}
+
 # Link every command (leaf .md files, namespace directories recreated as real dirs)
 install_commands() {
     [ -d "${LOCAL_DIR}/commands" ] || return 0
@@ -58,6 +82,7 @@ install_commands() {
         link_item "commands/${file#./}" "commands/${file#./}"
     done < <(cd "${LOCAL_DIR}/commands" && find . -type f -name '*.md' | sed 's|^\./||' | sort)
     [ "${found}" -eq 0 ] && echo "- none found"
+    prune_component "commands"
     echo ""
 }
 
@@ -71,6 +96,7 @@ install_agents() {
         link_item "agents/${file#./}" "agents/${file#./}"
     done < <(cd "${LOCAL_DIR}/agents" && find . -type f -name '*.md' | sed 's|^\./||' | sort)
     [ "${found}" -eq 0 ] && echo "- none found"
+    prune_component "agents"
     echo ""
 }
 
@@ -84,6 +110,7 @@ install_skills() {
         link_item "skills/${dir}" "skills/${dir}"
     done < <(cd "${LOCAL_DIR}/skills" && find . -mindepth 1 -maxdepth 1 -type d | sed 's|^\./||' | sort)
     [ "${found}" -eq 0 ] && echo "- none found"
+    prune_component "skills"
     echo ""
 }
 
