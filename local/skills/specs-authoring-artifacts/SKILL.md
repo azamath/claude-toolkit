@@ -36,6 +36,7 @@ Describes the system's behaviour. It is the source used to validate the system.
 - <link to another spec artifact>
 ````
 
+**Parts:**
 A requirement is a name, a description, and optionally rules and scenarios. Both are optional and may appear together — a requirement the description covers on its own needs neither.
 
 **The name** is a noun phrase naming the behavior, kept short enough to scan — *Order confirmation email*, *Session expiry*, *Bulk export*, *Duplicate detection*. It names the requirement; the description states it.
@@ -76,6 +77,7 @@ The list grows as new cases are encountered. An entry belongs here when it is bi
 - <link to another spec artifact>
 ````
 
+**Parts:**
 A document holds exactly one thing, and its title names that thing. The title and the opening line are fixed; the body takes whatever form the content's nature takes. References is optional. Data specs carry no inline labels: a document holds one thing, so there is nothing to distinguish its headings from.
 
 ## Choosing between them

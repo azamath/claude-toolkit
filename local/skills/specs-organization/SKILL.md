@@ -7,19 +7,17 @@ Specification documents live under `/docs`: in-progress change-specs, final feat
 
 ## Change-specs — work in progress
 
-Location: `/docs/changes/<NNN>-<slug>/`
+Location: `/docs/changes/<NNN>-<description-slug>/`
 
 Each change is a folder, numbered incrementally with three digits (`001-add-auth`, `002-rework-billing`). The folder holds whatever documents the change needs. Common files:
 
-- `reqs.md` — what is required
-- `design.md` — how to build it
-- `adrs/<slug>.md` — architecture decisions, one document per decision (`event-driven-billing.md`)
-
-Other files are fine when the change calls for them (`api.md`, `schema.md`, etc.). The naming convention is a default, not a rule.
+- `proposal.md` — why, and what changes. Carries the front-matter `status` field that tracks the change's lifecycle (a new change starts as `draft`; the apply/archive workflow keys off this)
+- `specs/<feature-name>/*.md` — specification artifacts that will be converted to durable artifacts (by feature)
+- `adrs/<decision>.md` — architecture decisions, one document per decision (`event-driven-billing.md`)
 
 ## Feature-specs — applied state
 
-Location: `/docs/specs/<feature-name>/`
+Location: `/docs/specs/<feature-name>/*.md`
 
 Organized by feature, not by change. This is the durable record of what the system is.
 
@@ -35,14 +33,8 @@ Named by slug, not numbered — a number assigned inside a change would collide 
 
 A change folder exists while the work is in progress. Once the work lands:
 
-- its requirements belong in `/docs/specs/<feature-name>/`;
+- its spec fragments merge into `/docs/specs/<feature-name>/*.md`;
 - its ADRs move to `/docs/adrs/`;
-- the change folder itself moves to `/docs/changes/.archive/<NNN>-<slug>/` as historical record.
+- the change folder itself moves to `/docs/changes/.archive/<NNN>-<description-slug>/` as historical record.
 
 The archive preserves history without cluttering the active changes list. `/docs/specs/` and `/docs/adrs/` remain the source of truth for the system's current state — what it does, and why it is shaped that way.
-
-## Document templates
-
-The `templates/` directory beside this skill holds document templates:
-
-- `reqs.md` — the requirements doc
