@@ -24,6 +24,12 @@ When adding a component, decide which mode it belongs to first. A plugin bundles
 - `README.md` - Human-oriented documentation and usage instructions
 - `*-local.sh` - Bash scripts for the local install mode
 
+## Working rules
+
+Rules for how to work in this repository.
+
+- **Components are independent.** Work on a component reads only that component. Do not explore other components to infer shared rules, patterns, or relations — a change in one plugin does not depend on the content of `local/` components, or of any other plugin.
+
 ## Writing rules
 
 Rules for what may be written — in skills, commands, templates, and docs like this one.
