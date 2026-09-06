@@ -1,6 +1,6 @@
 ---
 name: specs-authoring-artifacts
-description: Authoring specification artifacts — its purpose, content, structure, and principles to follow. Use when creating, drafting, or revising.
+description: Authoring specification artifacts — artifact types, their content, structure, and writing principles to follow. Use when creating, drafting, or revising.
 ---
 
 ## Specification artifact types
@@ -8,50 +8,63 @@ description: Authoring specification artifacts — its purpose, content, structu
 - Functional Requirements Specs
 - Data Specs
 
-## Principles
+## Authoring Principles
 
-No artifact holds technical implementation.
+- No artifact holds details of the implementation. The specification serves as source of what is required, and a contract to validate the implementation.
+- Content reaches a data spec by the nature of the information, not by its size.
+- A spec references another only where it directly relates to or depends on it. References are optional; a spec that stands alone carries none.
 
-## Functional Requirements Specs
+## Artifacts Writing and Formatting
+
+These rules applied to every artifact described here and defines how content is laid out on the page, so a reader can find what they need without reading it all.
+
+- **Titles.** Every artifact is titled `<feature> - <artifact type>`, where the noun names what it holds.
+
+- **Every sentence carries content.** Cut restatement, hedging, and preamble.
+
+- **Break content into named parts.** Content is not run together as prose.
+
+- **Prefer lists to tables.** A list is the default form. Reach for a table only when the content is genuinely a grid — when each item carries the same several attributes and they need to be read across as well as down. Content that fits a list should never be forced into one.
+
+## Artifact Type: Functional Requirements Specs
 
 Describes the system's behaviour. It is the source used to validate the system.
 
-**Contains:** requirements — each a named behaviour with a description, and optionally the invariants that hold and the scenarios that exercise it.
+### High-level layout
 
-**Structure:**
+```
+# [feature] - Functional Requirements
 
-````
-# <feature> - Functional Requirements
+<!-- requirement block: -->
+## Requirement: [requirement name 1]
+[detailed description of the requirement 1]
 
-## `FR` <requirement name>
-<detailed description of what system should do>
+<!-- optional scenarios: -->
+### Scenario: [scenario name]
+[concrete trigger and its outcome]
+<!-- end scenarios: -->
+<!-- end requirement block -->
 
-**Rules**
-- <invariant that always holds>
+<!-- requirement block: -->
+## Requirement: [requirement name 2]
+[detailed description of the requirement 2]
+<!-- end requirement block -->
 
-### `Scenario` <scenario name>
-<concrete trigger and its outcome>
+## References <!-- optional -->
+- [linked title] - [description of what it contains]
+```
 
-## References
-- <link to another spec artifact>
-````
+**Notes:**
 
-**Parts:**
-A requirement is a name, a description, and optionally rules and scenarios. Both are optional and may appear together — a requirement the description covers on its own needs neither.
+- **The requirement name** is a noun phrase naming the behavior, kept short enough to scan — *Order confirmation email*, *Session expiry*, *Bulk export*, *Duplicate detection*. It names the requirement; the description states it. The `Requirement:` prefix marks the heading as opening a requirement block.
+- **The requirement description** the actual body of the requirement that states what the system should do - verifiable against the implementation.
+- **Scenarios** are optional. They are a trigger and its outcome, in free prose under a named heading — *Payment declined*, *Import interrupted mid-file*, *Two editors save the same record*. The heading names the situation; the prose says what happens. The `Scenario:` prefix marks the heading as opening a scenario block.
 
-**The name** is a noun phrase naming the behavior, kept short enough to scan — *Order confirmation email*, *Session expiry*, *Bulk export*, *Duplicate detection*. It names the requirement; the description states it.
+## Artifact Type: Data Specs
 
-**Rules** are invariants: they hold at all times, with no trigger. Each is one line, so they are a list, not headings — *an order total is never negative*, *an archived record is never returned by search*, *a session token is valid for exactly one device*.
+The fixed sets of terms, values, and states the system works with.
 
-**Scenarios** are a trigger and its outcome, in free prose under a named heading — *Payment declined*, *Import interrupted mid-file*, *Two editors save the same record*. The heading names the situation; the prose says what happens.
-
-**Document-level sections** come after all requirements, at the end of the document. They carry no label — the label is what marks a heading as a requirement. **References** links to other spec artifacts.
-
-## Data Specs
-
-The fixed sets of terms, values, and states the system works with, each spelled out in its own document.
-
-**Contains:** one such set per document —
+Example kinds:
 
 - **taxonomies and controlled vocabularies** — a closed set of named things the system recognizes, and the meaning of each
 - **derivation tables** — a defined quantity and where its value comes from
@@ -61,33 +74,18 @@ The fixed sets of terms, values, and states the system works with, each spelled 
 - **formats and identifier schemes** — the shape a value must take, when that shape is externally fixed
 - **message and copy catalogs** — externally-decided text the system presents, where the exact wording is specified
 - **thresholds and limits** — externally-set numeric boundaries, and what happens at each
+- other kinds that is specific to a problem domain or area
 
-The list grows as new cases are encountered. An entry belongs here when it is binding specification decided outside the code *and* its natural form is a set, mapping, or table rather than a statement about behaviour. Content that only meets the second half is implementation.
+### High-level layout
 
-**Structure:**
+```
+# [topic] - [artifact type]
 
-````
-# <feature> - <noun>
+[what the document holds]
 
-<what the document holds, and who decides it>
+## [section title] <!-- optional title: if artifact contains more than one kind of information -->
+[the content in shape of lists or tables, in the form its nature takes]
 
-<the content, in the form its nature takes>
-
-## References
-- <link to another spec artifact>
-````
-
-**Parts:**
-A document holds exactly one thing, and its title names that thing. The title and the opening line are fixed; the body takes whatever form the content's nature takes. References is optional. Data specs carry no inline labels: a document holds one thing, so there is nothing to distinguish its headings from.
-
-## Choosing between them
-
-The two types sit at the same level: a feature may hold both, or data specs alone. Content reaches a data spec by the nature of the information, not by its size. Where a requirement depends on a data spec, it links that document explicitly.
-
-## Formatting
-
-**Titles.** Every document is titled `# <feature> - <noun>`, where the noun names what the document holds.
-
-**Prefer lists.** A list is the default form. Reach for a table only when the content is genuinely a grid — when each item carries the same several attributes and they need to be read across as well as down. Content that fits a list should never be forced into one.
-
-**Labels.** Where a document holds headings of more than one kind, each carries an inline-code label naming its kind.
+## References <!-- optional -->
+- [linked title] - [description of what it contains]
+```
