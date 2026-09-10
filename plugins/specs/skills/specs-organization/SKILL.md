@@ -21,20 +21,38 @@ Specifications can be kept different way depending on the project or team.
 
 Mapping:
 
-- Live specs: `/docs/specs/<feature-name>-<kind>.md`;
+- Live specs: `/docs/specs/<feature-name>-<type>.md`;
 - ADRs (applied): `/docs/adrs/<decision>.md` - one document per decision;
 - Change specs: `/docs/changes/<NNN>-<description-slug>/`.  
   Each change is a folder, numbered incrementally with three digits (`001-add-auth`, `002-rework-billing`). The folder holds whatever documents the change needs:
   - Proposal: `proposal.md`
-  - Delta Specs: `specs/<feature-name>-<kind>.md` — specification artifacts that will be merged into durable specs (by feature);
+  - Delta Specs: `specs/<feature-name>-<type>.md` — specification artifacts that will be merged into durable specs (by feature);
   - ADRs: `adrs/<decision>.md` — architecture decisions, one document per decision (`event-driven-billing.md`); Named by slug, not numbered — a number assigned inside a change would collide with a concurrent change's on the way in. The slug is fixed when the ADR is written, so it survives the move and any reference to it keeps working. Git holds the chronology;
 - Archived Change Specs: `/docs/changes/.archive/<NNN>-<description-slug>/`
 
 Applying:
-- change spec fragments merge into `/docs/specs/<feature-name>-<kind>.md`;
+- change spec fragments merge into `/docs/specs/<feature-name>-<type>.md`;
 - change ADRs move to `/docs/adrs/`;
 - the change folder itself moves to `/docs/changes/.archive/<NNN>-<description-slug>/`;
 
 ### Storage: Notion (https://notion.com)
 
-<!-- TODO -->
+Each group is a Notion database. The project records the databases it uses in its own durable docs (e.g. `CLAUDE.md`).
+
+Titles are human-readable prose; slugs and file-style names are not used. References between artifacts are Notion page links, which follow renames.
+
+Mapping:
+
+- Live specs: `Specifications` database — one page per feature and type (`Auth — Functional Requirements`);
+- ADRs: `ADRs` database — one page per decision;
+- Change specs: `Changes` database — one page per change, `Status` properties. The page holds the change's artifacts as child pages:
+  - Proposal: the change page's own body;
+  - Delta Specs: child pages titled as the live spec they modify;
+  - ADRs: child pages, one per decision;
+- Archived Change Specs: the same `Changes` page with `Status` set to `Archived`. Active and archive views filter on it; the page never moves, so links stay valid.
+
+Applying:
+
+- delta spec child pages merge into the `Specifications` page they are titled after;
+- change ADR child pages move into the `ADRs`;
+- the change page's `Status` is set to `Archived`;
