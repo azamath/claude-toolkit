@@ -1,5 +1,6 @@
 {
   "name": "specs",
+  "displayName": "Writing Specifications",
   "description": "Specification and product documentation components for Claude Code",
   "version": "0.1.0",
   "author": {

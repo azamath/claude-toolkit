@@ -7,6 +7,7 @@
   "plugins": [
     {
       "name": "specs",
+      "displayName": "Writing Specifications",
       "source": "./plugins/specs",
       "description": "Specification and product documentation components for Claude Code"
     }
