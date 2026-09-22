@@ -11,4 +11,5 @@ Match the situation to a guide below, read that file, and apply it — load only
 
 ## Available guides
 
+- **`references/linting/biome.md`** — formatting, linting, and import organizing for a TypeScript/JavaScript project: the config layout across a monorepo, what belongs in the shared base versus a package, and how the scripts wire in. Read when setting up formatting or linting in a JS/TS project, or reviewing one that runs ESLint and Prettier separately.
 - **`references/logging/node-gcp.md`** — application logging for a Node service running on Google Cloud: picking the logger, emitting structured entries Cloud Logging understands, and wiring errors through to Error Reporting. Read when adding logging to a Node service deployed on GCP, or reviewing one that logs unstructured text.
