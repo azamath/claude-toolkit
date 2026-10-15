@@ -11,7 +11,7 @@ The scope step answers *what must be true* for a change, before anyone decides *
 
 Two things settle *where the scope comes from* before you ask a single question — get them right and the interview stays behavior-first on its own.
 
-**Ground in the existing specs, not the code.** Read what the system is *already specified* to do so you don't re-derive settled ground from the user or mistake an existing behavior for a new one: the durable feature specs, and the spec fragments of any in-progress changes. These are the register of *what the system already does and what was already resolved* — so they sharpen behavior-first thinking rather than biasing it. (See `specs-organization` for where these live; read only the specs, not design/architecture notes.)
+**Ground in the existing specs, not the code.** Read what the system is *already specified* to do so you don't re-derive settled ground from the user or mistake an existing behavior for a new one: the durable feature specs, and the spec fragments of any in-progress changes. These are the register of *what the system already does and what was already resolved* — so they sharpen behavior-first thinking rather than biasing it. (See `organization` for where these live; read only the specs, not design/architecture notes.)
 
 **Take the need from the change, not from the implementation.** The scope comes from *what must be true after this change* — the desired behavior and the user's goal — never from how the system is built today. Do not read the code to source questions: it is the starting point you are moving *away from*, and letting it drive you anchors the change to the status quo, biases it toward small diffs, and dresses design details up as needs ("the code caches X — should it still?"). Reconciling the scope against the existing implementation is a separate concern, not part of gathering it.
 
@@ -32,7 +32,7 @@ Stop when the picture is coherent and the open questions are written down, not w
 
 ## What to produce
 
-The interview lands in two places in the change folder (see `specs-organization`):
+The interview lands in two places in the change folder (see `organization`):
 
 - **`proposal.md`** — why the change exists, what changes, what is out of scope, and the open questions.
 - **`specs/<feature-name>/*.md`** — the behavior itself, written as it will read in the durable spec: what the system does once the change lands, by feature. A directory per feature the change touches, mirroring the durable layout — each fragment named for the artifact it will merge into.
@@ -41,8 +41,8 @@ The split is the point. The fragment describes the system and survives the chang
 
 ## Lifecycle note
 
-When this change is applied, the fragments merge into the durable feature specs and the proposal is archived with the change folder (see `specs-applying-change`). Write each fragment as durable system behavior, and keep this-change-only bookkeeping — rationale, out-of-scope items, deferrals — in the proposal.
+When this change is applied, the fragments merge into the durable feature specs and the proposal is archived with the change folder (see `applying-change`). Write each fragment as durable system behavior, and keep this-change-only bookkeeping — rationale, out-of-scope items, deferrals — in the proposal.
 
 ## Related skills
-- `specs-organization` — where change folders and feature specs live, and the naming convention
-- `specs-applying-change` — what happens to the proposal and fragments when the change lands
+- `organization` — where change folders and feature specs live, and the naming convention
+- `applying-change` — what happens to the proposal and fragments when the change lands

@@ -17,12 +17,12 @@ argument-hint: "change description"
 
    **IMPORTANT**: Do NOT proceed without understanding what the user wants to build.
 
-2. Decide whether to create a new change-spec or to update an existing one. First **load the `specs-organization` skill** to learn how change folders are laid out, then:
+2. Decide whether to create a new change-spec or to update an existing one. First **load the `organization` skill** to learn how change folders are laid out, then:
    - user may explicitly indicate if it is a separate change;
    - a change scope may be an addition or fix to a current change, check the list and make a decision.
 
-3. Gather the scope — grounded in the existing specs, **not** the implementation. **Load the `specs-gathering-scope` skill** and follow it to produce `proposal.md` and the `specs/<feature-name>/*.md` fragments in the change folder.
+3. Gather the scope — grounded in the existing specs, **not** the implementation. **Load the `gathering-scope` skill** and follow it to produce `proposal.md` and the `specs/<feature-name>/*.md` fragments in the change folder.
 
-4. Settle the architectural decisions, before the design. **Load the `specs-architectural-decisions` skill** and write an ADR for each choice that meets its bar. Most changes will have none.
+4. Settle the architectural decisions, before the design. **Load the `architectural-decisions` skill** and write an ADR for each choice that meets its bar. Most changes will have none.
 
 5. Design how to build it, within the decisions from step 4. Produce `design.md` in the change folder.

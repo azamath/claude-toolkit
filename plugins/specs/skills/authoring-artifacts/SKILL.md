@@ -1,5 +1,5 @@
 ---
-name: specs-authoring-artifacts
+name: authoring-artifacts
 description: Authoring specification artifacts — artifact types, their content, structure, and writing principles to follow. Use when creating, drafting, or revising.
 ---
 

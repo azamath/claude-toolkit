@@ -8,7 +8,7 @@ Temporary. Delete when the skill is finished.
 - **Content:** structure only. No process, no interview steps, no file-storage or naming conventions.
 - **Stance:** strongly opinionated about what a PRD must not contain.
 - **Scale:** scale-adaptive — same structure, sections expand or collapse from small feature to whole product.
-- **Clean sheet:** no links to change-specs, ADRs, requirements-gathering, or specs-organization. Never reference them.
+- **Clean sheet:** no links to change-specs, ADRs, requirements-gathering, or organization. Never reference them.
 
 ## Discussion order
 

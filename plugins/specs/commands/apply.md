@@ -8,8 +8,8 @@ argument-hint: "a change-spec number or description"
 **User prompt:** $ARGUMENTS
 
 **Required skills:**
-- `specs-organization`
-- `specs-applying-change`
+- `organization`
+- `applying-change`
 
 **Workflow:**
 1. Identify which change-spec to apply:

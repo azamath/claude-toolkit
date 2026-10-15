@@ -28,7 +28,7 @@ A change spec describes *how the system got somewhere*. A spec describes *what t
 ## How to apply ADRs
 - Move each ADR from the change's `adrs/` folder to `/docs/adrs/`, keeping its filename;
 - Carry the content across as written - an ADR records what was decided at the time, so don't rewrite it to match how things turned out;
-- A filename that already exists in `/docs/adrs/` means the decision was reversed: the incoming ADR supersedes it and overwrites the file. Before overwriting, check it absorbs the decision it replaces (see `specs-architectural-decisions`) - if it doesn't, the reasoning is about to be lost, so stop and confirm with the user;
+- A filename that already exists in `/docs/adrs/` means the decision was reversed: the incoming ADR supersedes it and overwrites the file. Before overwriting, check it absorbs the decision it replaces (see `architectural-decisions`) - if it doesn't, the reasoning is about to be lost, so stop and confirm with the user;
 
 ## How to archive change specs
 - Make sure change spec has already been implemented (the `status` front-matter field in `proposal.md`), confirm otherwise;
@@ -36,4 +36,4 @@ A change spec describes *how the system got somewhere*. A spec describes *what t
 - Don't touch or modify change spec docs content;
 
 ## Related skills
-- `specs-organization` - load in order to learn how to organize spec directories
+- `organization` - load in order to learn how to organize spec directories
